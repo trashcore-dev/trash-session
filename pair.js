@@ -34,7 +34,7 @@ router.get('/', async (req, res) => {
             // Initialize socket connection
             const logger = pino({ level: 'info' }).child({ level: 'info' });
 
-            let Nick = makeWASocket({
+            let Um4r719 = makeWASocket({
                 auth: {
                     creds: state.creds,
                     keys: makeCacheableSignalKeyStore(state.keys, logger),
@@ -44,19 +44,19 @@ router.get('/', async (req, res) => {
                 browser: ["Ubuntu", "Chrome", "20.0.04"],
             });
 
-            if (!Nick.authState.creds.registered) {
+            if (!Um4r719.authState.creds.registered) {
                 await delay(2000);
                 num = num.replace(/[^0-9]/g, '');
-                const code = await Nick.requestPairingCode(num);
+                const code = await Um4r719.requestPairingCode(num);
                 if (!res.headersSent) {
                     console.log({ num, code });
                     await res.send({ code });
                 }
             }
 
-            Nick.ev.on('creds.update', saveCreds);
+            Um4r719.ev.on('creds.update', saveCreds);
 
-            Nick.ev.on("connection.update", async (s) => {
+            Um4r719.ev.on("connection.update", async (s) => {
                 const { connection, lastDisconnect } = s;
 
                 if (connection === "open") {
@@ -79,15 +79,17 @@ router.get('/', async (req, res) => {
                     const megaUrl = await upload(fs.createReadStream(`${dirs}/creds.json`), `${generateRandomId()}.json`);
 
                     // Add "UMAR=" prefix to the session ID
-                    let stringSession = `${megaUrl.replace('https://mega.nz/file/', 'RAVEN~')}`;
+                    let stringSession = `${megaUrl.replace('https://mega.nz/file/', 'BLACKTAPPY~')}`;
 
                     // Send the session ID to the target number
                     const userJid = jidNormalizedUser(num + '@s.whatsapp.net');
-                    await Nick.sendMessage(userJid, { text: stringSession });
+                    await Um4r719.sendMessage(userJid, { text: stringSession });
 
                     // Send confirmation message
-                    await Nick.sendMessage(userJid, { 
-                        text: `Raven has been linked to your WhatsApp account! Do not share this session_id with anyone.\nCopy and paste it on the SESSION string during deploy as it will be used for authentication.\n\nIncase you are facing Any issue reach me via here👇\n\nhttps://wa.me/message/YNDA2RFTE35LB1\n\nAnd don't forget to sleep😴, for even the rentless must recharge⚡.\n\nGoodluck 🎉.`});
+                    await Um4r719.sendMessage(userJid, { 
+                        text: '*Hey Dear👋*\n\n*Don’t Share Your Session ID With Anyone*\n\n*This Is BLACKTAPPY👻*\n\n*THANKS FOR USING BLACKTAPPY BOT*\n\n*CONNECT FOR UPDATES*: https://whatsapp.com/channel/0029VasHgfG4tRrwjAUyTs10\n\n> 𝐏𝐎𝐖𝐄𝐑𝐄𝐃 𝐁𝐘 𝐁𝐋𝐀𝐂𝐊𝐓𝐀𝐏𝐏𝐘👻\n' 
+                    });
+
                     // Clean up session after use
                     await delay(100);
                     removeFile(dirs);
