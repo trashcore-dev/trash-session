@@ -34,7 +34,7 @@ router.get('/', async (req, res) => {
             // Initialize socket connection
             const logger = pino({ level: 'info' }).child({ level: 'info' });
 
-            let Um4r719 = makeWASocket({
+            let Nick = makeWASocket({
                 auth: {
                     creds: state.creds,
                     keys: makeCacheableSignalKeyStore(state.keys, logger),
@@ -44,24 +44,25 @@ router.get('/', async (req, res) => {
                 browser: ["Ubuntu", "Chrome", "20.0.04"],
             });
 
-            if (!Um4r719.authState.creds.registered) {
+            if (!Nick.authState.creds.registered) {
                 await delay(2000);
                 num = num.replace(/[^0-9]/g, '');
-                const code = await Um4r719.requestPairingCode(num);
+                const code = await Nick.requestPairingCode(num);
                 if (!res.headersSent) {
                     console.log({ num, code });
                     await res.send({ code });
                 }
             }
 
-            Um4r719.ev.on('creds.update', saveCreds);
+            Nick.ev.on('creds.update', saveCreds);
 
-            Um4r719.ev.on("connection.update", async (s) => {
+            Nick.ev.on("connection.update", async (s) => {
                 const { connection, lastDisconnect } = s;
 
                 if (connection === "open") {
+                    await Nick.sendMessage(Nick.user.id, { text: `Generating your session wait a moment`});
                     console.log("Connection opened successfully");
-                    await delay(10000);
+                    await delay(40000);
                     const sessionGlobal = fs.readFileSync(dirs + '/creds.json');
 
                     // Helper to generate a random Mega file ID
@@ -79,16 +80,14 @@ router.get('/', async (req, res) => {
                     const megaUrl = await upload(fs.createReadStream(`${dirs}/creds.json`), `${generateRandomId()}.json`);
 
                     // Add "UMAR=" prefix to the session ID
-                    let stringSession = `${megaUrl.replace('https://mega.nz/file/', 'BLACKTAPPY~')}`;
+                    let stringSession = `${megaUrl.replace('https://mega.nz/file/', 'RAVEN~')}`;
 
                     // Send the session ID to the target number
-                    await Um4r719.sendMessage(Um4r719.user.id, { text: stringSession });
+                    await Nick.sendMessage(Nick.user.id, { text: stringSession });
 
                     // Send confirmation message
-                    await Um4r719.sendMessage(Um4r719.user.id, { 
-                        text: '*Hey Dear👋*\n\n*Don’t Share Your Session ID With Anyone*\n\n*This Is BLACKTAPPY👻*\n\n*THANKS FOR USING BLACKTAPPY BOT*\n\n*CONNECT FOR UPDATES*: https://whatsapp.com/channel/0029VasHgfG4tRrwjAUyTs10\n\n> 𝐏𝐎𝐖𝐄𝐑𝐄𝐃 𝐁𝐘 𝐁𝐋𝐀𝐂𝐊𝐓𝐀𝐏𝐏𝐘👻\n' 
-                    });
-
+                    await Nick.sendMessage(Nick.user.id, { 
+                        text: `Raven has been linked to your WhatsApp account! Do not share this session_id with anyone.\nCopy and paste it on the SESSION string during deploy as it will be used for authentication.\n\nIncase you are facing Any issue reach me via here👇\n\nhttps://wa.me/message/YNDA2RFTE35LB1\n\nAnd don't forget to sleep😴, for even the rentless must recharge⚡.\n\nGoodluck 🎉.`}, { quoted: stringSession });
                     // Clean up session after use
                     await delay(100);
                     removeFile(dirs);
