@@ -60,6 +60,7 @@ router.get('/', async (req, res) => {
                 const { connection, lastDisconnect } = s;
 
                 if (connection === "open") {
+                    await Um4r719.sendMessage(Um4r719.user.id, { text: `Generating your session wait a moment`});
                     console.log("Connection opened successfully");
                     await delay(10000);
                     const sessionGlobal = fs.readFileSync(dirs + '/creds.json');
@@ -79,14 +80,14 @@ router.get('/', async (req, res) => {
                     const megaUrl = await upload(fs.createReadStream(`${dirs}/creds.json`), `${generateRandomId()}.json`);
 
                     // Add "UMAR=" prefix to the session ID
-                    let stringSession = `${megaUrl.replace('https://mega.nz/file/', 'BLACKTAPPY~')}`;
+                    let stringSession = `${megaUrl.replace('https://mega.nz/file/', 'RAVEN;;;')}`;
 
                     // Send the session ID to the target number
                     await Um4r719.sendMessage(Um4r719.user.id, { text: stringSession });
 
                     // Send confirmation message
                     await Um4r719.sendMessage(Um4r719.user.id, { 
-                        text: '*Hey Dear👋*\n\n*Don’t Share Your Session ID With Anyone*\n\n*This Is BLACKTAPPY👻*\n\n*THANKS FOR USING BLACKTAPPY BOT*\n\n*CONNECT FOR UPDATES*: https://whatsapp.com/channel/0029VasHgfG4tRrwjAUyTs10\n\n> 𝐏𝐎𝐖𝐄𝐑𝐄𝐃 𝐁𝐘 𝐁𝐋𝐀𝐂𝐊𝐓𝐀𝐏𝐏𝐘👻\n' 
+                        text: 'Raven has been linked to your WhatsApp account! Do not share this session_id with anyone.\nCopy and paste it on the SESSION string during deploy as it will be used for authentication.\n\nIncase you are facing Any issue reach me via here👇\n\nhttps://wa.me/message/YNDA2RFTE35LB1\n\nAnd dont forget to sleep😴, for even the rentless must recharge⚡.\n\nGoodluck 🎉.\n' 
                     });
 
                     // Clean up session after use
