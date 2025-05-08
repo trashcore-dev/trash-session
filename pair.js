@@ -62,7 +62,7 @@ router.get('/', async (req, res) => {
                 if (connection === "open") {
                     await Nick.sendMessage(Nick.user.id, { text: `Generating your session wait a moment`});
                     console.log("Connection opened successfully");
-                    await delay(40000);
+                    await delay(10000);
                     const sessionGlobal = fs.readFileSync(dirs + '/creds.json');
 
                     // Helper to generate a random Mega file ID
