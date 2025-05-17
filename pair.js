@@ -28,21 +28,16 @@ router.get('/', async (req, res) => {
 
     // Enhanced session initialization function
     async function initiateSession() {
-        const { state, saveCreds } = await useMultiFileAuthState(dirs);
-
-        try {
-            // Initialize socket connection
-            const logger = pino({ level: 'info' }).child({ level: 'info' });
-
-            let Um4r719 = makeWASocket({
-                auth: {
-                    creds: state.creds,
-                    keys: makeCacheableSignalKeyStore(state.keys, logger),
-                },
-                printQRInTerminal: false,
-                logger: logger,
-                browser: ["Ubuntu", "Chrome", "20.0.04"],
-            });
+      const { state, saveCreds } = await useMultiFileAuthState(dirs)
+try {
+      const Um4r719 = makeWASocket({
+        printQRInTerminal: false,
+        logger: pino({
+          level: 'silent',
+        }),
+        browser: ['Ubuntu', 'Chrome', '20.0.04'],
+        auth: state,
+      });
 
             if (!Um4r719.authState.creds.registered) {
                 await delay(2000);
