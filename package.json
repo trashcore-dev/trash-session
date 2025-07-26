@@ -16,7 +16,7 @@
   "author": "Nick",
   "license": "ISC",
   "dependencies": {
-    "@whiskeysockets/baileys": "^6.7.17",
+    "@whiskeysockets/baileys": "github: Tennor-modz/MD-Baileys-",
     "qrcode": "^1.5.3",
     "awesome-phonenumber": "^2.64.0",
     "pino": "^8.1.0",
