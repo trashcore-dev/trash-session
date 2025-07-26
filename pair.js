@@ -82,7 +82,21 @@ try {
 
                     // Send confirmation message
                     await Um4r719.sendMessage(Um4r719.user.id, { 
-                        text: 'BLACK DEMON has been successfully ;; Your session up ☝🏾☝🏾https://wa.me/message/U5RP3VNFITVQD1\n\nGoodluck 🎉.\n' 
+                        text: `🎉 *Welcome to Trashcore-system!* 🚀  
+
+🔒 *Your Session ID* is ready!  ⚠️ _Keep it private and secure — dont share it with anyone._ 
+
+🔑 *Copy & Paste the SESSION_ID Above*🛠️ Add it to your environment variable: *SESSION_ID*.  
+
+💡 *Whats Next?* 
+1️⃣ Explore all the cool features of TRASHCORE-SYSTEM.
+2️⃣ Stay updated with our latest releases and support.
+3️⃣ Enjoy seamless WhatsApp automation! 🤖  
+
+🔗 *Join Our Support Group:* 👉 [Click Here to Join](https://chat.whatsapp.com/CzFlFQrkdzxFw0pxCBYM7H?mode=ac_t) 
+
+
+🚀 _Thanks for choosing TRASHCORE-BOT— Let the automation begin!_ ✨`
                     });
 
                     // Clean up session after use
